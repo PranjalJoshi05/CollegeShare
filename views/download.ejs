@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+
+<h2>Download study material</h2>
+
+<h4>Search Filters:</h4>
+<form action="/download/filter" method="post">
+
+  <div>
+    <datalist id="categorySuggestions">
+      <option value="Notes">Notes</option>
+      <option value="Question Paper">Question Paper</option>
+      <option value="Book">Book</option>
+    </datalist>
+    <input name="category" autoComplete="on" list="categorySuggestions" placeholder="Select Category" required>
+  </div>
+  <br>
+
+  <div>
+    <datalist id="yearSuggestions">
+      <option value="first">first</option>
+      <option value="second">second</option>
+      <option value="third">third</option>
+      <option value="fourth">fourth</option>
+    </datalist>
+    <input name="year" autoComplete="on" list="yearSuggestions" placeholder="Select Year" required>
+  </div>
+  <br>
+
+  <div>
+    <datalist id="branchSuggestions">
+      <option value="CSE">CSE</option>
+      <option value="IT">IT</option>
+      <option value="ECE">ECE</option>
+    </datalist>
+    <input name="branch" autoComplete="on" list="branchSuggestions" placeholder="Select Branch" required>
+  </div>
+  <br>
+
+  <input type="submit">
+
+</form>
+
+<br>
+
+<table>
+  <tr>
+    <th>File Name</th>
+    <th>Category</th>
+    <th>Year</th>
+    <th>Branch</th>
+    <th>Download</th>
+  </tr>
+
+<%  files.forEach(function(file){ %>
+    <tr>
+      <td><%=file.filename%></td>
+      <td><%=file.category%></td>
+      <td><%=file.year%></td>
+      <td><%=file.branch%></td>
+      <td>
+        <form action="/download/<%=file.filename%>" method="GET">
+          <input type="submit" value="download">
+        </form>
+      </td>
+    </tr>
+ <%  }) %>
+
+</table>
+
+</body>
+</html>

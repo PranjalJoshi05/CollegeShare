@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Upload File</title>
+  </head>
+  <body>
+  <form action="/upload/api" method="post" enctype="multipart/form-data">
+
+    <div>
+      <datalist id="categorySuggestions">
+        <option value="Notes">Notes</option>
+        <option value="Question Paper">Question Paper</option>
+        <option value="Book">Book</option>
+      </datalist>
+      <input name="category" autoComplete="on" list="categorySuggestions" placeholder="Select Category" required>
+    </div>
+    <br>
+
+    <div>
+      <datalist id="yearSuggestions">
+        <option value="first">first</option>
+        <option value="second">second</option>
+        <option value="third">third</option>
+        <option value="fourth">fourth</option>
+      </datalist>
+      <input name="year" autoComplete="on" list="yearSuggestions" placeholder="Select Year" required>
+    </div>
+    <br>
+
+    <div>
+      <datalist id="branchSuggestions">
+        <option value="CSE">CSE</option>
+        <option value="IT">IT</option>
+        <option value="ECE">ECE</option>
+      </datalist>
+      <input name="branch" autoComplete="on" list="branchSuggestions" placeholder="Select Branch" required>
+    </div>
+    <br>
+
+    <input type="file" name="file" accept="application/pdf" required>
+    <br>
+    <br>
+
+    <input type="submit">
+
+</form>
+
+  </body>
+</html>
