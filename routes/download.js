@@ -1,12 +1,6 @@
 const router = require('express').Router();
 const File = require('../models/file');
 
-//find distinct subjects
-let subjects;
-File.find().distinct( 'subject', (error,items)=>{
-  subjects = items;
-});
-
 //file download route
 router.get('/api/:filename', async (req, res) => {
   const file = await File.findOne({ filename: req.params.filename});
@@ -20,7 +14,9 @@ router.get('/',(req,res)=>{
     if(err){
       console.log(err);
     }else{
-      res.render('download', {files: foundItems, filters: req.query, subjects: subjects});
+      File.find().distinct( 'subject', (error,items)=>{
+        res.render('download', {files: foundItems, filters: req.query, subjects: items});
+      });
     }
   });
 });
@@ -33,7 +29,7 @@ router.post('/filter',(req,res)=>{
   const branch = req.body.branch;
   let url = '/download?';
   if(subject!=="") url = url + "subject=" + subject;
-  if(category!=="") url = url + "category=" + category;
+  if(category!=="") url = url + "&category=" + category;
   if(year!=="") url = url + "&year=" + year;
   if(branch!=="") url = url + "&branch=" + branch;
   res.redirect(url);
