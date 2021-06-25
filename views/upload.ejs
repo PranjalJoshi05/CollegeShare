@@ -1,50 +1,72 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Upload File</title>
-  </head>
-  <body>
-  <form action="/upload/api" method="post" enctype="multipart/form-data">
+<%- include('partials/header', {title: "upload"}); -%>
 
-    <div>
-      <datalist id="categorySuggestions">
+<form action="/upload" method="post" enctype="multipart/form-data" style="margin:20px 40px 40px;">
+  <fieldset>
+    <legend>Upload File</legend>
+    <div class="form-group">
+      <label for="exampleInputEmail1" class="form-label mt-4">Email address</label>
+      <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" required>
+      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    </div>
+    <div class="form-group">
+      <label class="col-form-label mt-4" for="inputDefault">Subject</label>
+      <datalist id="suggestions">
+        <option value="Engineering Mathematics">Engineering Mathematics</option>
+        <option value="Engineering Chemistry">Engineering Chemistry</option>
+        <option value="Computer Programming">Computer Programming</option>
+        <option value="Basic Electrical Engineering">Basic Electrical Engineering</option>
+        <option value="Engineering Economics and Management">Engineering Economics and Management</option>
+        <option value="Engineering Physics">Engineering Physics</option>
+        <option value="Python Programming">Python Programming</option>
+        <option value="Basic Electronics Engineering">Basic Electronics Engineering</option>
+        <option value="Communication Skills">Communication Skills</option>
+        <option value="Discrete Structures">Discrete Structures</option>
+        <option value="Probability and Random Process">Probability and Random Process</option>
+        <option value="Automata and Formal Languages">Automata and Formal Languages</option>
+        <option value="Data Structures and Algorithms">Data Structures and Algorithms</option>
+        <option value="Digital Electronics">Digital Electronics</option>
+        <option value="Computational Tools and Techniques">Computational Tools and Techniques</option>
+        <option value="Computer Organization">Computer Organization</option>
+        <option value="Operating Systems">Operating Systems</option>
+        <option value="Computer Networks">Computer Networks</option>
+        <option value="Database Management Systems">Database Management Systems</option>
+        <option value="Object Oriented Programming in C++">Object Oriented Programming in C++</option>
+      </datalist>
+      <input name="subject" class="form-control" autoComplete="off" list="suggestions" placeholder="Enter subject" id="inputDefault" required>
+    </div>
+    <div class="form-group">
+      <label for="exampleSelect1" class="form-label mt-4">Select category</label>
+      <select name="category" class="form-select" id="exampleSelect1">
         <option value="Notes">Notes</option>
         <option value="Question Paper">Question Paper</option>
         <option value="Book">Book</option>
-      </datalist>
-      <input name="category" autoComplete="on" list="categorySuggestions" placeholder="Select Category" required>
+      </select>
     </div>
-    <br>
-
-    <div>
-      <datalist id="yearSuggestions">
+    <div class="form-group">
+      <label for="exampleSelect1" class="form-label mt-4">Select year</label>
+      <select name="year" class="form-select" id="exampleSelect1">
         <option value="first">first</option>
         <option value="second">second</option>
         <option value="third">third</option>
         <option value="fourth">fourth</option>
-      </datalist>
-      <input name="year" autoComplete="on" list="yearSuggestions" placeholder="Select Year" required>
+      </select>
     </div>
-    <br>
-
-    <div>
-      <datalist id="branchSuggestions">
+    <div class="form-group">
+      <label for="exampleSelect1" class="form-label mt-4">Select branch</label>
+      <select name="branch" class="form-select" id="exampleSelect1">
         <option value="CSE">CSE</option>
         <option value="IT">IT</option>
         <option value="ECE">ECE</option>
-      </datalist>
-      <input name="branch" autoComplete="on" list="branchSuggestions" placeholder="Select Branch" required>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="formFile" class="form-label mt-4">Upload file</label>
+      <input name="file" class="form-control" type="file" id="formFile" accept="application/pdf" required>
     </div>
     <br>
-
-    <input type="file" name="file" accept="application/pdf" required>
-    <br>
-    <br>
-
-    <input type="submit">
-
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </fieldset>
 </form>
+</body>
 
-  </body>
 </html>

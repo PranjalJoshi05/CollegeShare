@@ -1,92 +1,102 @@
-<!DOCTYPE html>
-<html>
-<head>
-<style>
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-}
+<%- include('partials/header', {title: "download"}); -%>
 
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-}
+<div style="margin:40px;">
 
-tr:nth-child(even) {
-  background-color: #dddddd;
-}
-</style>
-</head>
-<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <form action="/download/filter" method="post">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <label class="form-label" for="inputDefault">Enter subject</label>
+            <datalist id="suggestions">
+              <option value="Engineering Mathematics">Engineering Mathematics</option>
+              <option value="Engineering Chemistry">Engineering Chemistry</option>
+              <option value="Computer Programming">Computer Programming</option>
+              <option value="Basic Electrical Engineering">Basic Electrical Engineering</option>
+              <option value="Engineering Economics and Management">Engineering Economics and Management</option>
+              <option value="Engineering Physics">Engineering Physics</option>
+              <option value="Python Programming">Python Programming</option>
+              <option value="Basic Electronics Engineering">Basic Electronics Engineering</option>
+              <option value="Communication Skills">Communication Skills</option>
+              <option value="Discrete Structures">Discrete Structures</option>
+              <option value="Probability and Random Process">Probability and Random Process</option>
+              <option value="Automata and Formal Languages">Automata and Formal Languages</option>
+              <option value="Data Structures and Algorithms">Data Structures and Algorithms</option>
+              <option value="Digital Electronics">Digital Electronics</option>
+              <option value="Computational Tools and Techniques">Computational Tools and Techniques</option>
+              <option value="Computer Organization">Computer Organization</option>
+              <option value="Operating Systems">Operating Systems</option>
+              <option value="Computer Networks">Computer Networks</option>
+              <option value="Database Management Systems">Database Management Systems</option>
+              <option value="Object Oriented Programming in C++">Object Oriented Programming in C++</option>
+            </datalist>
+            <input name="subject" class="form-control" autoComplete="off" list="suggestions" id="inputDefault">
+          </li>
+          <li class="nav-item" style="margin-left: 40px;">
+            <label for="exampleSelect1" class="form-label">Select category</label>
+            <select name="category" class="form-select" id="exampleSelect1">
+              <option value=""></option>
+              <option value="Notes">Notes</option>
+              <option value="Question Paper">Question Paper</option>
+              <option value="Book">Book</option>
+            </select>
+          </li>
+          <li class="nav-item" style="margin-left: 40px;">
+            <label for="exampleSelect1" class="form-label">Select year</label>
+            <select name="year" class="form-select" id="exampleSelect1">
+              <option value=""></option>
+              <option value="first">first</option>
+              <option value="second">second</option>
+              <option value="third">third</option>
+              <option value="fourth">fourth</option>
+            </select>
+          </li>
+          <li class="nav-item" style="margin-left: 40px;">
+            <label for="exampleSelect1" class="form-label">Select branch</label>
+            <select name="branch" class="form-select" id="exampleSelect1">
+              <option value=""></option>
+              <option value="CSE">CSE</option>
+              <option value="IT">IT</option>
+              <option value="ECE">ECE</option>
+            </select>
+          </li>
+          <li class="nav-item" style="margin-left: 40px;">
+            <label for="exampleSelect1" class="form-label invisible">Filter</label>
+            <button class="form-select btn btn-primary" id="exampleSelect1" type="submit">Filter</button>
+          </li>
+        </ul>
+      </form>
+    </div>
+  </nav>
 
-<h2>Download study material</h2>
-
-<h4>Search Filters:</h4>
-<form action="/download/filter" method="post">
-
-  <div>
-    <datalist id="categorySuggestions">
-      <option value="Notes">Notes</option>
-      <option value="Question Paper">Question Paper</option>
-      <option value="Book">Book</option>
-    </datalist>
-    <input name="category" autoComplete="on" list="categorySuggestions" placeholder="Select Category" required>
-  </div>
   <br>
 
-  <div>
-    <datalist id="yearSuggestions">
-      <option value="first">first</option>
-      <option value="second">second</option>
-      <option value="third">third</option>
-      <option value="fourth">fourth</option>
-    </datalist>
-    <input name="year" autoComplete="on" list="yearSuggestions" placeholder="Select Year" required>
-  </div>
-  <br>
-
-  <div>
-    <datalist id="branchSuggestions">
-      <option value="CSE">CSE</option>
-      <option value="IT">IT</option>
-      <option value="ECE">ECE</option>
-    </datalist>
-    <input name="branch" autoComplete="on" list="branchSuggestions" placeholder="Select Branch" required>
-  </div>
-  <br>
-
-  <input type="submit">
-
-</form>
-
-<br>
-
-<table>
-  <tr>
-    <th>File Name</th>
-    <th>Category</th>
-    <th>Year</th>
-    <th>Branch</th>
-    <th>Download</th>
-  </tr>
-
-<%  files.forEach(function(file){ %>
+  <table>
     <tr>
-      <td><%=file.filename%></td>
+      <th>Subject</th>
+      <th>Category</th>
+      <th>Year</th>
+      <th>Branch</th>
+      <th>Download</th>
+    </tr>
+
+    <%  files.forEach(function(file){ %>
+    <tr>
+      <td><%=file.subject%></td>
       <td><%=file.category%></td>
       <td><%=file.year%></td>
       <td><%=file.branch%></td>
       <td>
-        <form action="/download/<%=file.filename%>" method="GET">
-          <input type="submit" value="download">
+        <form action="/download/api/<%=file.filename%>" method="GET">
+          <input class="btn btn-success" type="submit" value="download">
         </form>
       </td>
     </tr>
- <%  }) %>
+    <%  }) %>
 
-</table>
+  </table>
+</div>
 
 </body>
+
 </html>

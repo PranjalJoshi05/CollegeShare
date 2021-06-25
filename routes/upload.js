@@ -16,11 +16,11 @@ let upload = multer({
   limit: {fileSize: 1000000*50}, //50MB
 }).single('file');
 
-router.post('/',(req,res)=>{
+router.get('/',(req,res)=>{
   res.render('upload');
 });
 
-router.post('/api',(req, res)=>{
+router.post('/',(req, res)=>{
   //store file
   upload(req, res, async(err) =>{
     //validate request
@@ -35,6 +35,8 @@ router.post('/api',(req, res)=>{
       filename: req.file.filename,
       path: req.file.path,
       size: req.file.size,
+      email: req.body.email,
+      subject: req.body.subject,
       category: req.body.category,
       year: req.body.year,
       branch: req.body.branch
@@ -43,7 +45,7 @@ router.post('/api',(req, res)=>{
     const response = await file.save();
 
     //Response
-    res.sendFile(__dirname+"/success.html");
+    res.render('success');
 
   });
 });
