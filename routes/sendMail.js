@@ -15,10 +15,10 @@ function sendRejectMail(username) {
 
   // message object
   let message = {
-    from: 'CollegeShare',
+    from: process.env.GMAIL_ID,
     to: `${username}`,
     subject: 'Rejected',
-    html: `<p>The file you uploaded is irrelevant to our database. :(</p>`
+    html: `<p>Sorry, the file you uploaded is irrelevant to our database.</p>`
   };
 
   transporter.sendMail(message, (err, info) => {
@@ -30,15 +30,14 @@ function sendAcceptMail(username) {
 
   // message object
   let message = {
-    from: 'CollegeShare',
+    from: process.env.GMAIL_ID,
     to: `${username}`,
     subject: 'Accepted',
-    html: `<p>The file you uploaded is accepted. Thank You for contributing to CollegeShare. :)</p>`
+    html: `<p>The file you uploaded is added to our database. Thank You for contributing to CollegeShare.</p>`
   };
 
   transporter.sendMail(message, (err, info) => {
     if (err) console.log('Error occurred. ' + err.message);
-    else console.log('Message sent: %s', info.messageId);
   });
 }
 
