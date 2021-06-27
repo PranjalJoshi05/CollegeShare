@@ -32,6 +32,9 @@ app.use('/admin', admin);
 const action = require('./routes/action');
 app.use('/action', action);
 
+const sendmail = require('./routes/sendMail');
+app.use('/sendmail', sendmail);
+
 //connect to port
 const PORT = process.env.PORT || 3000;
 

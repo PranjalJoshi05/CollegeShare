@@ -15,7 +15,7 @@ router.get('/delete/:filename', async (req, res) => {
 });
 
 //accept route
-router.get('/accept/:filename', async (req, res) => {
+router.get('/accept/:filename/:email', async (req, res) => {
   File.updateOne({
     filename: req.params.filename
   }, {
@@ -24,14 +24,22 @@ router.get('/accept/:filename', async (req, res) => {
     if (err) {
       console.log(err)
     } else {
-      res.redirect('/admin');
+      res.redirect('/sendmail/accept/'+req.params.email);
     }
   });
 });
 
 //reject route
-router.get('/reject/:filename', async (req, res) => {
-  res.redirect('/action/delete' + req.params.filename);
+router.get('/reject/:filename/:email', async (req, res) => {
+  File.deleteOne({
+    filename: req.params.filename
+  }, (err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.redirect('/sendmail/reject/'+req.params.email);
+    }
+  });
 });
 
 module.exports = router;

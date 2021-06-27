@@ -179,12 +179,12 @@
               <td></td>
               <%  }else{ %>
               <td>
-                <form action="/action/accept/<%=file.filename%>" method="GET">
+                <form action="/action/accept/<%=file.filename%>/<%=file.email%>" method="GET">
                   <input class="btn btn-info" type="submit" value="accept">
                 </form>
               </td>
               <td>
-                <form action="/action/reject/<%=file.filename%>" method="GET">
+                <form action="/action/reject/<%=file.filename%>/<%=file.email%>" method="GET">
                   <input class="btn btn-warning" type="submit" value="reject">
                 </form>
               </td>
