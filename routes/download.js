@@ -10,6 +10,7 @@ router.get('/api/:filename', async (req, res) => {
 
 //download route
 router.get('/',(req,res)=>{
+  req.query.accepted = true;
   File.find(req.query,(err, foundItems)=>{
     if(err){
       console.log(err);

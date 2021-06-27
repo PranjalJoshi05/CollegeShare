@@ -1,4 +1,5 @@
 const express = require('express');
+
 const app = express();
 
 // static files
@@ -27,6 +28,9 @@ app.use('/download', download);
 
 const admin = require('./routes/admin');
 app.use('/admin', admin);
+
+const action = require('./routes/action');
+app.use('/action', action);
 
 //connect to port
 const PORT = process.env.PORT || 3000;

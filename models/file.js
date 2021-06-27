@@ -9,7 +9,8 @@ const fileSchema = new Schema({
     subject: { type: String, required: true },
     category: { type: String, required: true },
     year: { type: String, required: true },
-    branch: { type: String, required: true }
+    branch: { type: String, required: true },
+    accepted: { type: Boolean, default: false }
 }, { timestamps: true });
 
 module.exports = mongoose.model('File', fileSchema);

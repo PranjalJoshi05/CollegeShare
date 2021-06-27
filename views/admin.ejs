@@ -1,5 +1,204 @@
 <%- include('partials/header', {title: "admin"}); -%>
 
+
+<div style="margin:40px;">
+  <a class="btn btn-light btn-lg" href="/admin/logout" role="button">Log Out</a>
+  <br><br>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <form action="/admin/filter" method="post">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <label for="exampleSelect1" class="form-label">Select subject</label>
+            <select name="subject" class="form-select" id="exampleSelect1">
+              <option value="">-none-</option>
+              <% subjects.forEach(function(item){
+                 if(filters.subject===item){  %>
+              <option value="<%=item%>" selected><%=item%></option>
+              <%   }else{  %>
+              <option value="<%=item%>"><%=item%></option>
+              <%   }
+                }); %>
+            </select>
+          </li>
+          <li class="nav-item" style="margin-left: 40px;">
+            <label for="exampleSelect1" class="form-label">Select category</label>
+            <select name="category" class="form-select" id="exampleSelect1">
+              <option value="">-none-</option>
+              <%    switch(filters.category) {
+              case "Notes":   %>
+              <option value="Notes" selected>Notes</option>
+              <option value="Question Paper">Question Paper</option>
+              <option value="Book">Book</option>
+              <%      break;
+              case "Question Paper":    %>
+              <option value="Notes">Notes</option>
+              <option value="Question Paper" selected>Question Paper</option>
+              <option value="Book">Book</option>
+              <%      break;
+              case "Book":   %>
+              <option value="Notes">Notes</option>
+              <option value="Question Paper">Question Paper</option>
+              <option value="Book" selected>Book</option>
+              <%      break;
+              default:    %>
+              <option value="Notes">Notes</option>
+              <option value="Question Paper">Question Paper</option>
+              <option value="Book">Book</option>
+              <%    }   %>
+            </select>
+          </li>
+
+          <li class="nav-item" style="margin-left: 40px;">
+            <label for="exampleSelect1" class="form-label">Select year</label>
+            <select name="year" class="form-select" id="exampleSelect1">
+              <option value="">-none-</option>
+              <%    switch(filters.year) {
+              case "first":   %>
+              <option value="first" selected>first</option>
+              <option value="second">second</option>
+              <option value="third">third</option>
+              <option value="fourth">fourth</option>
+              <%      break;
+              case "second":    %>
+              <option value="first">first</option>
+              <option value="second" selected>second</option>
+              <option value="third">third</option>
+              <option value="fourth">fourth</option>
+              <%      break;
+              case "third":   %>
+              <option value="first">first</option>
+              <option value="second">second</option>
+              <option value="third" selected>third</option>
+              <option value="fourth">fourth</option>
+              <%      break;
+              case "fourth":    %>
+              <option value="first">first</option>
+              <option value="second">second</option>
+              <option value="third">third</option>
+              <option value="fourth" selected>fourth</option>
+              <%      break;
+              default:    %>
+              <option value="first">first</option>
+              <option value="second">second</option>
+              <option value="third">third</option>
+              <option value="fourth">fourth</option>
+              <%    }   %>
+
+            </select>
+          </li>
+          <li class="nav-item" style="margin-left: 40px;">
+            <label for="exampleSelect1" class="form-label">Select branch</label>
+            <select name="branch" class="form-select" id="exampleSelect1">
+              <option value="">-none-</option>
+              <%    switch(filters.branch) {
+              case "CSE":   %>
+              <option value="CSE" selected>CSE</option>
+              <option value="IT">IT</option>
+              <option value="ECE">ECE</option>
+              <%      break;
+              case "IT":    %>
+              <option value="CSE">CSE</option>
+              <option value="IT" selected>IT</option>
+              <option value="ECE">ECE</option>
+              <%      break;
+              case "ECE":   %>
+              <option value="CSE">CSE</option>
+              <option value="IT">IT</option>
+              <option value="ECE" selected>ECE</option>
+              <%      break;
+              default:    %>
+              <option value="CSE">CSE</option>
+              <option value="IT">IT</option>
+              <option value="ECE">ECE</option>
+              <%    }   %>
+            </select>
+          </li>
+          <li class="nav-item" style="margin-left: 40px;">
+            <label for="exampleSelect1" class="form-label">Select status</label>
+            <select name="accepted" class="form-select" id="exampleSelect1">
+              <option value="">-none-</option>
+              <%    switch(filters.accepted) {
+              case "true":   %>
+              <option value="true" selected>accepted</option>
+              <option value="false">pending</option>
+              <%      break;
+              case "false":    %>
+              <option value="true">accepted</option>
+              <option value="false" selected>pending</option>
+              <%      break;
+              default:    %>
+              <option value="true">accepted</option>
+              <option value="false">pending</option>
+              <%    }   %>
+            </select>
+          </li>
+          <li class="nav-item" style="margin-left: 40px;">
+            <label for="exampleSelect1" class="form-label invisible">Filter</label>
+            <button class="form-select btn btn-primary" id="exampleSelect1" type="submit">Filter</button>
+          </li>
+        </ul>
+      </form>
+    </div>
+  </nav>
+
+  <br>
+
+  <table>
+    <tr>
+      <th>Subject</th>
+      <th>Category</th>
+      <th>Year</th>
+      <th>Branch</th>
+      <th>Download</th>
+      <th>Delete</th>
+      <th>Action</th>
+    </tr>
+
+    <%  files.forEach(function(file){ %>
+    <tr>
+      <td><%=file.subject%></td>
+      <td><%=file.category%></td>
+      <td><%=file.year%></td>
+      <td><%=file.branch%></td>
+      <td>
+        <form action="/download/api/<%=file.filename%>" method="GET">
+          <input class="btn btn-success" type="submit" value="download">
+        </form>
+      </td>
+      <td>
+        <form action="/action/delete/<%=file.filename%>" method="GET">
+          <input class="btn btn-danger" type="submit" value="delete">
+        </form>
+      </td>
+      <td>
+        <table>
+          <tbody>
+            <tr>
+              <%  if(file.accepted===true){ %>
+              <td></td>
+              <%  }else{ %>
+              <td>
+                <form action="/action/accept/<%=file.filename%>" method="GET">
+                  <input class="btn btn-info" type="submit" value="accept">
+                </form>
+              </td>
+              <td>
+                <form action="/action/reject/<%=file.filename%>" method="GET">
+                  <input class="btn btn-warning" type="submit" value="reject">
+                </form>
+              </td>
+              <%  } %>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    <%  }) %>
+
+  </table>
+</div>
+
 </body>
 
 </html>
