@@ -19,13 +19,13 @@ passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
   if (req.isAuthenticated()) {
-    File.find(req.query,(err, foundItems)=>{
+    await File.find(req.query, async (err, foundItems)=>{
       if(err){
         console.log(err);
       }else{
-        File.find().distinct( 'subject', (error,items)=>{
+        await File.find().distinct( 'subject', (error,items)=>{
           res.render('admin', {files: foundItems, filters: req.query, subjects: items});
         });
       }
@@ -48,7 +48,7 @@ router.post("/", (req, res) => {
 
   req.login(user, function(err) {
     if (err) {
-      console.log(err);
+      console.log(err.message);
     } else {
       passport.authenticate("local")(req, res, function() {
         res.redirect("/admin");

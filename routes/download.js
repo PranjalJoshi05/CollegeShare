@@ -11,13 +11,13 @@ router.get('/api/:id', async (req, res) => {
 });
 
 //download route
-router.get('/',(req,res)=>{
+router.get('/', async (req,res)=>{
   req.query.accepted = true;
-  File.find(req.query,(err, foundItems)=>{
+  await File.find(req.query, async (err, foundItems)=>{
     if(err){
       console.log(err);
     }else{
-      File.find().distinct( 'subject', (error,items)=>{
+      await File.find().distinct( 'subject', (error,items)=>{
         res.render('download', {files: foundItems, filters: req.query, subjects: items});
       });
     }

@@ -43,9 +43,9 @@ function sendAcceptMail(username) {
 
 router.get('/:status/:email', async (req, res) => {
   if(req.params.status==="accept"){
-    sendAcceptMail(req.params.email);
+    await sendAcceptMail(req.params.email);
   }else{
-    sendRejectMail(req.params.email);
+    await sendRejectMail(req.params.email);
   }
   res.redirect('/admin');
 });

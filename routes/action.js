@@ -4,9 +4,11 @@ const File = require('../models/file');
 
 //file delete route
 router.get('/delete/:id', async (req, res) => {
-  // Delete image from cloudinary
+  // Delete file from cloudinary
   await cloudinary.uploader.destroy(req.params.id);
-  File.deleteOne({
+
+  //Delete file from database
+  await File.deleteOne({
     cloudinary_id: req.params.id
   }, (err) => {
     if (err) {
@@ -19,7 +21,7 @@ router.get('/delete/:id', async (req, res) => {
 
 //accept route
 router.get('/accept/:id/:email', async (req, res) => {
-  File.updateOne({
+  await File.updateOne({
     cloudinary_id: req.params.id
   }, {
     accepted: true
@@ -34,9 +36,11 @@ router.get('/accept/:id/:email', async (req, res) => {
 
 //reject route
 router.get('/reject/:id/:email', async (req, res) => {
-  // Delete image from cloudinary
+  // Delete file from cloudinary
   await cloudinary.uploader.destroy(req.params.id);
-  File.deleteOne({
+
+  //Delete file from database
+  await File.deleteOne({
     cloudinary_id: req.params.id
   }, (err) => {
     if (err) {

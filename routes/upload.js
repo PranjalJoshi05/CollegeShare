@@ -9,7 +9,7 @@ router.get('/',(req,res)=>{
 
 router.post('/', upload.single("file"), async (req, res) => {
   try {
-    // Upload image to cloudinary
+    // Upload file to cloudinary
     const result = await cloudinary.uploader.upload(req.file.path);
 
     //Create new file
@@ -30,7 +30,7 @@ router.post('/', upload.single("file"), async (req, res) => {
     //Response
     res.render('success');
   } catch (err) {
-    console.log(err);
+    res.send(err.message);
   }
 });
 
