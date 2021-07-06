@@ -5,6 +5,7 @@ const app = express();
 // static files
 app.use(express.static('public'));
 
+//middleware
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 

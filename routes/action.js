@@ -1,10 +1,13 @@
 const router = require('express').Router();
+const cloudinary = require("../utils/cloudinary");
 const File = require('../models/file');
 
 //file delete route
-router.get('/delete/:filename', async (req, res) => {
+router.get('/delete/:id', async (req, res) => {
+  // Delete image from cloudinary
+  await cloudinary.uploader.destroy(req.params.id);
   File.deleteOne({
-    filename: req.params.filename
+    cloudinary_id: req.params.id
   }, (err) => {
     if (err) {
       console.log(err);
@@ -15,9 +18,9 @@ router.get('/delete/:filename', async (req, res) => {
 });
 
 //accept route
-router.get('/accept/:filename/:email', async (req, res) => {
+router.get('/accept/:id/:email', async (req, res) => {
   File.updateOne({
-    filename: req.params.filename
+    cloudinary_id: req.params.id
   }, {
     accepted: true
   }, function(err) {
@@ -30,9 +33,11 @@ router.get('/accept/:filename/:email', async (req, res) => {
 });
 
 //reject route
-router.get('/reject/:filename/:email', async (req, res) => {
+router.get('/reject/:id/:email', async (req, res) => {
+  // Delete image from cloudinary
+  await cloudinary.uploader.destroy(req.params.id);
   File.deleteOne({
-    filename: req.params.filename
+    cloudinary_id: req.params.id
   }, (err) => {
     if (err) {
       console.log(err);

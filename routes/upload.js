@@ -1,39 +1,21 @@
 const router = require('express').Router();
-const multer = require('multer');
-const path = require('path');
+const cloudinary = require("../utils/cloudinary");
+const upload = require("../utils/multer");
 const File = require('../models/file');
-
-let storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null,'uploads/'),
-  filename: (req, file, cb) => {
-    const uniqueName = `${Date.now()}-${Math.round(Math.random() * 1E9)}${path.extname(file.originalname)}`;
-    cb(null, uniqueName);
-  }
-})
-
-let upload = multer({
-  storage: storage,
-  limit: {fileSize: 1000000*50}, //50MB
-}).single('file');
 
 router.get('/',(req,res)=>{
   res.render('upload');
 });
 
-router.post('/',(req, res)=>{
-  //store file
-  upload(req, res, async(err) =>{
-    //validate request
-    if(!req.file){
-      return res.json({error: 'All fields are required'});
-    }
-    if(err){
-      return res.status(500).send({error: err.message});
-    }
-    //store into Database
+router.post('/', upload.single("file"), async (req, res) => {
+  try {
+    // Upload image to cloudinary
+    const result = await cloudinary.uploader.upload(req.file.path);
+
+    //Create new file
     const file = new File({
-      filename: req.file.filename,
-      path: req.file.path,
+      url: result.secure_url,
+      cloudinary_id: result.public_id,
       size: req.file.size,
       email: req.body.email,
       subject: req.body.subject,
@@ -42,12 +24,14 @@ router.post('/',(req, res)=>{
       branch: req.body.branch
     });
 
-    const response = await file.save();
+    // Save file
+    await file.save();
 
     //Response
     res.render('success');
-
-  });
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 module.exports = router;

@@ -162,12 +162,12 @@
       <td><%=file.year%></td>
       <td><%=file.branch%></td>
       <td>
-        <form action="/download/api/<%=file.filename%>" method="GET">
+        <form action="/download/api/<%=file.cloudinary_id%>" method="GET">
           <input class="btn btn-success" type="submit" value="download">
         </form>
       </td>
       <td>
-        <form action="/action/delete/<%=file.filename%>" method="GET">
+        <form action="/action/delete/<%=file.cloudinary_id%>" method="GET">
           <input class="btn btn-danger" type="submit" value="delete">
         </form>
       </td>
@@ -179,12 +179,12 @@
               <td></td>
               <%  }else{ %>
               <td>
-                <form action="/action/accept/<%=file.filename%>/<%=file.email%>" method="GET">
+                <form action="/action/accept/<%=file.cloudinary_id%>/<%=file.email%>" method="GET">
                   <input class="btn btn-info" type="submit" value="accept">
                 </form>
               </td>
               <td>
-                <form action="/action/reject/<%=file.filename%>/<%=file.email%>" method="GET">
+                <form action="/action/reject/<%=file.cloudinary_id%>/<%=file.email%>" method="GET">
                   <input class="btn btn-warning" type="submit" value="reject">
                 </form>
               </td>
