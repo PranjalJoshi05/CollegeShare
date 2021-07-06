@@ -141,9 +141,7 @@
       <td><%=file.year%></td>
       <td><%=file.branch%></td>
       <td>
-        <form action="/download/api/download/<%=file.cloudinary_id%>" method="GET">
-          <input class="btn btn-success" type="submit" value="download">
-        </form>
+        <a class="btn btn-success" href="<%=file.url%>" target="_blank">Download</a>
       </td>
     </tr>
     <%  }) %>

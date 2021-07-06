@@ -1,15 +1,5 @@
 const router = require('express').Router();
-const cloudinary = require("../utils/cloudinary");
 const File = require('../models/file');
-const open = require('open');
-
-//file download route
-router.get('/api/:page/:id', async (req, res) => {
-  const file = await File.findOne({ cloudinary_id: req.params.id });
-  // await open(file.url);
-  // res.redirect('/'+req.params.page);
-  res.redirect(file.url);
-});
 
 //download route
 router.get('/', async (req,res)=>{
