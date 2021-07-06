@@ -8,7 +8,7 @@
     <div class="container-fluid">
       <form action="/download/filter" method="post">
         <ul class="navbar-nav me-auto">
-          <li class="nav-item">
+          <li class="nav-item custom">
             <label for="exampleSelect1" class="form-label">Select subject</label>
             <select name="subject" class="form-select" id="exampleSelect1">
               <option value="">-none-</option>
@@ -141,7 +141,7 @@
       <td><%=file.year%></td>
       <td><%=file.branch%></td>
       <td>
-        <form action="/download/api/<%=file.cloudinary_id%>" method="GET">
+        <form action="/download/api/download/<%=file.cloudinary_id%>" method="GET">
           <input class="btn btn-success" type="submit" value="download">
         </form>
       </td>
@@ -149,6 +149,12 @@
     <%  }) %>
 
   </table>
+
+  <%  if(files.length===0){ %>
+  <br>
+  No files found for current search filter
+  <%  } %>
+
 </div>
 
 </body>

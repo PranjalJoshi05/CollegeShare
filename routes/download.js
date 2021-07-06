@@ -4,10 +4,10 @@ const File = require('../models/file');
 const open = require('open');
 
 //file download route
-router.get('/api/:id', async (req, res) => {
+router.get('/api/:page/:id', async (req, res) => {
   const file = await File.findOne({ cloudinary_id: req.params.id });
   await open(file.url);
-  res.redirect('/download');
+  res.redirect('/'+req.params.page);
 });
 
 //download route
