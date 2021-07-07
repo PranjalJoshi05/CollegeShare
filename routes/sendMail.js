@@ -8,7 +8,7 @@ const transporter = nodemailer.createTransport({
   auth: {
     user: process.env.GMAIL_ID,
     pass: process.env.GMAIL_APP_KEY,
-  },
+  }
 });
 
 function sendRejectMail(username) {
