@@ -1,10 +1,11 @@
 const router = require('express').Router();
 const session = require("express-session");
 const passport = require("passport");
+const sanitize = require('mongo-sanitize');
 const File = require('../models/file');
 
 router.use(session({
-  secret: "Our little secret.",
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false
 }));
@@ -42,8 +43,8 @@ router.get("/logout", function(req, res){
 
 router.post("/", (req, res) => {
   const user = new User({
-    username: req.body.username,
-    password: req.body.password
+    username: sanitize(req.body.username),
+    password: sanitize(req.body.password)
   });
 
   req.login(user, function(err) {
